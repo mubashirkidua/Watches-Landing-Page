@@ -1,0 +1,235 @@
+/* ============================================================
+   THE OCEAN WATCHES — CEO Profile Page
+   ============================================================ */
+
+/* ---------- Profile ---------- */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: center;
+}
+.profile-visual { position: relative; }
+.portrait-frame {
+  position: relative;
+  border-radius: var(--radius-lg);
+  padding: 1.1rem;
+  background: linear-gradient(160deg, rgba(232,196,104,0.4), rgba(148,188,255,0.12) 40%, rgba(56,230,255,0.14));
+  box-shadow: var(--shadow-card);
+}
+.portrait-frame::after {
+  content: "";
+  position: absolute; inset: 1.1rem;
+  border-radius: calc(var(--radius-lg) - 0.4rem);
+  border: 1px solid rgba(232,196,104,0.25);
+  pointer-events: none;
+}
+.portrait-frame img {
+  width: 100%;
+  border-radius: calc(var(--radius-lg) - 0.5rem);
+  filter: saturate(1.05);
+}
+.profile-float {
+  position: absolute; bottom: 2.2rem; right: -1.4rem;
+  padding: 1.1rem 1.5rem;
+  border-radius: var(--radius-md);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border-strong);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  animation: floatY2 7s ease-in-out infinite;
+}
+.profile-float strong { display: block; font-family: var(--font-display); font-size: 2rem; color: var(--c-gold-soft); line-height: 1; }
+.profile-float span { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-mist); }
+.profile-quote {
+  margin-top: 2rem;
+  padding: 1.4rem 1.6rem;
+  border-left: 3px solid var(--c-gold);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: linear-gradient(90deg, rgba(232,196,104,0.1), transparent);
+  font-family: var(--font-script);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--c-mist);
+}
+.profile-quote strong { color: var(--c-gold-soft); }
+
+.profile-name {
+  font-size: clamp(2rem, 4.4vw, 3.2rem);
+  margin: 0.6rem 0 0.4rem;
+}
+.profile-role {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  color: var(--c-gold-soft);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  margin-bottom: 1.6rem;
+}
+.profile-role::before { content: ""; width: 30px; height: 2px; background: var(--grad-cta); border-radius: 2px; }
+.profile-bio { color: var(--c-mist); font-size: 1.02rem; margin-bottom: 1rem; }
+.profile-bio strong { color: var(--c-white); }
+
+/* contact cards */
+.contact-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 2rem 0 2.2rem;
+}
+.contact-card {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  padding: 1.4rem 1.3rem;
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px);
+  transition: transform 0.45s var(--ease-lux), border-color 0.35s, box-shadow 0.45s;
+}
+.contact-card:hover { transform: translateY(-6px); border-color: rgba(232,196,104,0.4); box-shadow: var(--glow-gold); }
+.contact-card .ic {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(34,67,255,0.28), rgba(56,230,255,0.1));
+  border: 1px solid var(--glass-border-strong);
+  color: var(--c-cyan);
+}
+.contact-card .ic svg { width: 20px; height: 20px; }
+.contact-card span { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-dim); }
+.contact-card a { font-size: 0.92rem; font-weight: 600; color: var(--c-white); word-break: break-all; }
+.contact-card a:hover { color: var(--c-gold-soft); }
+.profile-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+
+/* ---------- Info cards ---------- */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+.info-card { padding: 2.2rem 1.6rem; text-align: center; }
+.info-card .ic {
+  width: 58px; height: 58px;
+  margin: 0 auto 1.1rem;
+  display: grid; place-items: center;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(232,196,104,0.2), rgba(34,67,255,0.14));
+  border: 1px solid rgba(232,196,104,0.35);
+  color: var(--c-gold);
+}
+.info-card .ic svg { width: 26px; height: 26px; }
+.info-card h3 { font-size: 1.06rem; margin-bottom: 0.4rem; }
+.info-card p { color: var(--c-mist); font-size: 0.88rem; }
+
+/* ---------- Timeline ---------- */
+.timeline {
+  position: relative;
+  max-width: 880px;
+  margin-inline: auto;
+  padding-top: 0.5rem;
+}
+.timeline::before {
+  content: "";
+  position: absolute; top: 0; bottom: 0; left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, rgba(232,196,104,0.6) 8%, rgba(56,230,255,0.35) 90%, transparent);
+}
+.timeline-item {
+  position: relative;
+  display: flex;
+  width: 50%;
+  padding: 1.6rem 3rem 1.6rem 0;
+}
+.timeline-item:nth-child(even) { margin-left: 50%; padding: 1.6rem 0 1.6rem 3rem; }
+.timeline-dot {
+  position: absolute;
+  top: 2rem;
+  right: -13px;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--c-deep);
+  border: 3px solid var(--c-gold);
+  box-shadow: 0 0 0 6px rgba(232,196,104,0.12), 0 0 22px rgba(232,196,104,0.5);
+  z-index: 2;
+}
+.timeline-item:nth-child(even) .timeline-dot { right: auto; left: -13px; }
+.timeline-card { padding: 1.6rem 1.7rem; }
+.timeline-year {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--c-gold-soft);
+  margin-bottom: 0.5rem;
+}
+.timeline-year svg { width: 18px; height: 18px; color: var(--c-cyan); }
+.timeline-card h3 { font-size: 1.12rem; margin-bottom: 0.45rem; }
+.timeline-card p { color: var(--c-mist); font-size: 0.92rem; }
+
+/* ---------- Achievements ---------- */
+.ach-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.ach-card { padding: 2.1rem 1.6rem; text-align: center; }
+.ach-medal {
+  width: 76px; height: 76px;
+  margin: 0 auto 1.2rem;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fdf0c0, #e8c468 45%, #8a6a1f);
+  color: #241a03;
+  box-shadow: 0 12px 34px rgba(232,196,104,0.35), inset 0 2px 4px rgba(255,255,255,0.6);
+  transition: transform 0.5s var(--ease-lux), box-shadow 0.5s;
+}
+.ach-card:hover .ach-medal { transform: translateY(-8px) rotate(-6deg) scale(1.05); box-shadow: 0 20px 46px rgba(232,196,104,0.5); }
+.ach-medal svg { width: 34px; height: 34px; }
+.ach-card h3 { font-size: 1.02rem; margin-bottom: 0.4rem; }
+.ach-card p { color: var(--c-mist); font-size: 0.86rem; }
+.ach-card .ach-year { display: block; margin-top: 0.8rem; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); }
+
+/* ---------- Values / signature quote ---------- */
+.values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.value-card { padding: 2.2rem 1.8rem; }
+.value-card .num {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--c-gold);
+  opacity: 0.8;
+  margin-bottom: 0.8rem;
+}
+.value-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.value-card p { color: var(--c-mist); font-size: 0.92rem; }
+
+.signature-box {
+  margin-top: 3rem;
+  text-align: center;
+  padding: 2.4rem;
+  border-radius: var(--radius-lg);
+}
+.signature-box .sign {
+  font-family: var(--font-script);
+  font-style: italic;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  background: var(--grad-text-gold);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.signature-box p { color: var(--c-mist); margin-top: 0.4rem; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.75rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .info-grid, .ach-grid { grid-template-columns: repeat(2, 1fr); }
+  .values-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 900px) {
+  .profile-grid { grid-template-columns: 1fr; }
+  .profile-visual { max-width: 440px; margin-inline: auto; }
+  .contact-cards { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .timeline::before { left: 14px; }
+  .timeline-item, .timeline-item:nth-child(even) { width: 100%; margin-left: 0; padding: 1.2rem 0 1.2rem 3.4rem; }
+  .timeline-dot, .timeline-item:nth-child(even) .timeline-dot { left: 1px; right: auto; }
+  .info-grid, .ach-grid { grid-template-columns: 1fr; }
+  .profile-float { right: 0.5rem; }
+}

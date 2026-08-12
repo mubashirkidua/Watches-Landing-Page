@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 540" width="480" height="540" role="img" aria-label="Muhammad Mubashir Ali, Founder and CEO — professional portrait placeholder">
+  <defs>
+    <radialGradient id="ceo-bg" cx="0.5" cy="0.36" r="0.9">
+      <stop offset="0" stop-color="#123a8f"/>
+      <stop offset="0.55" stop-color="#081a4d"/>
+      <stop offset="1" stop-color="#02060f"/>
+    </radialGradient>
+    <radialGradient id="ceo-halo" cx="0.5" cy="0.3" r="0.75">
+      <stop offset="0" stop-color="rgba(56,230,255,0.35)"/>
+      <stop offset="0.5" stop-color="rgba(34,67,255,0.18)"/>
+      <stop offset="1" stop-color="rgba(34,67,255,0)"/>
+    </radialGradient>
+    <linearGradient id="ceo-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8a6a1f"/>
+      <stop offset="0.35" stop-color="#e8c468"/>
+      <stop offset="0.5" stop-color="#fdf0c0"/>
+      <stop offset="0.65" stop-color="#e8c468"/>
+      <stop offset="1" stop-color="#8a6a1f"/>
+    </linearGradient>
+    <linearGradient id="ceo-suit" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#1a3565"/>
+      <stop offset="1" stop-color="#0a1428"/>
+    </linearGradient>
+    <linearGradient id="ceo-skin" x1="0.4" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#e9b98e"/>
+      <stop offset="1" stop-color="#c98f5e"/>
+    </linearGradient>
+    <linearGradient id="ceo-tie" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2243ff"/>
+      <stop offset="1" stop-color="#1e7bff"/>
+    </linearGradient>
+    <filter id="ceo-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="b"/>
+      <feFlood flood-color="#38e6ff" flood-opacity="0.4" result="c"/>
+      <feComposite in="c" in2="b" operator="in"/>
+    </filter>
+    <clipPath id="ceo-clip"><circle cx="240" cy="252" r="212"/></clipPath>
+  </defs>
+
+  <rect width="480" height="540" fill="url(#ceo-bg)"/>
+
+  <!-- dotted constellation background -->
+  <g fill="rgba(148,188,255,0.28)">
+    <circle cx="70" cy="90" r="2"/><circle cx="420" cy="70" r="1.6"/><circle cx="390" cy="200" r="1.4"/>
+    <circle cx="60" cy="320" r="1.6"/><circle cx="430" cy="420" r="2"/><circle cx="120" cy="470" r="1.4"/>
+    <circle cx="360" cy="500" r="1.5"/><circle cx="180" cy="60" r="1.4"/>
+  </g>
+  <g stroke="rgba(148,188,255,0.14)" stroke-width="1">
+    <line x1="70" y1="90" x2="180" y2="60"/><line x1="70" y1="90" x2="60" y2="320"/>
+    <line x1="420" y1="70" x2="390" y2="200"/><line x1="420" y1="70" x2="430" y2="420"/>
+    <line x1="360" y1="500" x2="120" y2="470"/>
+  </g>
+
+  <circle cx="240" cy="252" r="226" fill="url(#ceo-halo)"/>
+  <circle cx="240" cy="252" r="212" fill="none" stroke="url(#ceo-gold)" stroke-width="4"/>
+
+  <g clip-path="url(#ceo-clip)">
+    <!-- shoulders & suit -->
+    <path d="M 30 540 C 60 470 120 452 150 452 C 158 470 168 486 180 496 C 196 510 212 516 240 516 C 268 516 284 510 300 496 C 312 486 322 470 330 452 C 360 452 420 470 450 540 Z"
+          fill="url(#ceo-suit)"/>
+    <!-- shirt -->
+    <path d="M 206 470 L 214 502 L 226 516 L 254 516 L 266 502 L 274 470 Z" fill="#e8edf6"/>
+    <!-- tie -->
+    <path d="M 230 470 L 240 462 L 250 470 L 244 516 L 236 516 Z" fill="url(#ceo-tie)"/>
+    <!-- lapels -->
+    <path d="M 150 452 L 176 452 L 200 486 L 180 500 Z" fill="#0d1c3e"/>
+    <path d="M 330 452 L 304 452 L 280 486 L 300 500 Z" fill="#0d1c3e"/>
+    <!-- shirt collar -->
+    <path d="M 206 470 L 220 460 L 240 468 L 260 460 L 274 470 L 250 478 L 230 478 Z" fill="#dfe6f2"/>
+    <!-- neck -->
+    <path d="M 218 452 C 220 436 226 426 240 426 C 254 426 260 436 262 452 Z" fill="url(#ceo-skin)"/>
+    <!-- head -->
+    <ellipse cx="240" cy="376" rx="72" ry="86" fill="url(#ceo-skin)"/>
+    <!-- hair silhouette -->
+    <path d="M 170 378 C 168 300 196 266 240 266 C 284 266 312 300 310 378 C 310 350 296 336 280 332 C 296 322 304 310 308 300 C 290 296 278 292 272 288 C 268 262 254 252 240 252 C 226 252 212 262 208 288 C 202 292 190 296 172 300 C 176 310 184 322 200 332 C 184 336 170 350 170 378 Z" fill="#10141e"/>
+    <!-- rim light -->
+    <path d="M 311 372 C 313 340 305 314 290 296 C 306 312 316 344 314 380 C 313 394 309 406 303 414 C 310 402 313 388 311 372 Z" fill="rgba(56,230,255,0.35)"/>
+    <!-- eyebrow -->
+    <path d="M 206 340 C 214 334 226 332 234 336" stroke="#10141e" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <path d="M 246 336 C 254 332 266 334 274 340" stroke="#10141e" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <!-- eye dots -->
+    <circle cx="222" cy="352" r="6" fill="#10141e"/>
+    <circle cx="258" cy="352" r="6" fill="#10141e"/>
+    <!-- nose + mouth -->
+    <path d="M 240 360 C 238 374 236 382 232 388" stroke="#b9804f" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M 226 412 C 234 418 246 418 254 412" stroke="#9c6a3e" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <circle cx="240" cy="252" r="212" fill="none" stroke="rgba(148,188,255,0.25)" stroke-width="1.5"/>
+  <circle cx="240" cy="252" r="220" fill="none" stroke="rgba(232,196,104,0.35)" stroke-width="1.2"/>
+
+  <!-- gold corner ticks -->
+  <g stroke="url(#ceo-gold)" stroke-width="3">
+    <line x1="240" y1="18" x2="240" y2="34"/>
+    <line x1="240" y1="470" x2="240" y2="486"/>
+    <line x1="8" y1="252" x2="24" y2="252"/>
+    <line x1="456" y1="252" x2="472" y2="252"/>
+  </g>
+</svg>

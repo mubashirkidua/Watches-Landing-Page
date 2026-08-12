@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxury Collection — The Ocean Watches</title>
+  <meta name="description" content="The signature showroom of The Ocean Watches. Ten rare timepieces orbit in a living gallery — Ocean Royal, Prestige, Sapphire, Diamond and more, crafted for those who value time, precision and elegance.">
+  <meta property="og:title" content="Luxury Collection — The Ocean Watches">
+  <meta property="og:description" content="Ten masterpieces in perpetual motion. Explore the signature collection of The Ocean Watches.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/svg/logo.svg">
+  <link rel="icon" type="image/svg+xml" href="assets/svg/logo.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/products.css">
+  <link rel="stylesheet" href="assets/css/luxury.css">
+</head>
+<body data-page="luxury">
+
+  <div class="page-loader" aria-hidden="true">
+    <div>
+      <div class="loader-ring"></div>
+      <div class="loader-word">The Ocean Watches</div>
+    </div>
+  </div>
+
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div id="mouse-glow" aria-hidden="true"></div>
+
+  <header id="site-nav"></header>
+
+  <main>
+    <!-- ==================== HERO / SHOWROOM ==================== -->
+    <section class="lux-hero" aria-label="Luxury Collection showroom">
+      <div class="lux-bg" aria-hidden="true">
+        <span class="aurora aurora-1"></span>
+        <span class="aurora aurora-2"></span>
+        <span class="aurora aurora-3"></span>
+        <div id="particles"></div>
+        <span class="lux-reflection"></span>
+      </div>
+
+      <div class="lux-hero-content container">
+        <span class="eyebrow center reveal">The Signature Collection</span>
+        <h1 class="lux-title" id="luxTitle" aria-label="Luxury Collection">Luxury Collection</h1>
+        <p class="lux-sub reveal d-2">Crafted for those who value <em>time</em>, <em>precision</em> and <em>elegance</em>.</p>
+        <div class="lux-hero-actions reveal d-3">
+          <a class="btn btn-gold" href="#showcase">
+            Enter The Showroom
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </a>
+          <span class="lux-scroll-hint" aria-hidden="true">Scroll to explore</span>
+        </div>
+      </div>
+
+      <div class="lux-waves" aria-hidden="true">
+        <svg class="wave wave-1" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,64 C180,96 360,32 540,48 C720,64 900,112 1080,96 C1260,80 1380,48 1440,56 L1440,120 L0,120 Z" fill="rgba(34,67,255,0.10)"/>
+        </svg>
+        <svg class="wave wave-2" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,48 C200,80 400,16 620,40 C840,64 1020,104 1220,80 C1320,68 1400,52 1440,48 L1440,120 L0,120 Z" fill="rgba(56,230,255,0.08)"/>
+        </svg>
+        <svg class="wave wave-3" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,32 C240,72 480,24 760,48 C1000,68 1220,88 1440,40 L1440,120 L0,120 Z" fill="rgba(232,196,104,0.06)"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ==================== ORBITAL SHOWCASE ==================== -->
+    <section class="lux-showcase" id="showcase" aria-label="Rotating luxury watch showcase">
+      <div class="showcase-intro container">
+        <span class="eyebrow center reveal">The Gallery In Motion</span>
+        <h2 class="section-title reveal">Ten Masterpieces, One Orbit</h2>
+        <p class="section-lead reveal d-2">Hover a timepiece to bring it closer. Hover the gallery to slow the heavens.</p>
+      </div>
+
+      <div class="showcase-stage" id="orbitStage">
+        <div class="orbit-track" aria-hidden="true"></div>
+        <div class="orbit-track orbit-track-2" aria-hidden="true"></div>
+        <div class="orbit-track orbit-track-3" aria-hidden="true"></div>
+
+        <div class="orbit-center">
+          <span class="oc-halo" aria-hidden="true"></span>
+          <img src="assets/svg/logo.svg" alt="The Ocean Watches logo" width="120" height="120">
+          <strong>The Ocean Watches</strong>
+          <span>Time · Precision · Elegance</span>
+        </div>
+
+        <div class="orbit-ring" id="orbitRing" role="list" aria-label="The ten timepieces of the luxury collection"></div>
+        <p class="orbit-hint" id="orbitHint">Hover to slow the orbit &middot; Click a watch to explore</p>
+      </div>
+    </section>
+
+    <!-- ==================== THE COLLECTION GRID ==================== -->
+    <section class="section lux-collection" id="luxCollection" aria-label="The complete luxury collection">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow center reveal">The Collection</span>
+          <h2 class="section-title reveal">Choose Your Ocean</h2>
+          <p class="section-lead reveal d-2">Every reference is hand-assembled, individually numbered and certified. Quick view, add to cart, or buy instantly.</p>
+        </div>
+        <div class="product-grid" id="luxGrid"></div>
+        <div class="preview-more reveal">
+          <a class="btn btn-royal" href="collection.html">
+            View The Full Collection
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== BOTTOM CTA ==================== -->
+    <section class="lux-cta" aria-label="Discover your perfect timepiece">
+      <div class="lux-cta-bg" aria-hidden="true">
+        <img src="assets/svg/watches/hero.svg" alt="">
+      </div>
+      <div class="lux-cta-glow" aria-hidden="true"></div>
+      <div class="container lux-cta-inner">
+        <span class="eyebrow center reveal">The Final Call</span>
+        <h2 class="reveal-zoom">Discover Your Perfect Timepiece</h2>
+        <p class="reveal d-2">Whether it is the roar of the Royal or the silence of the Diamond, the ocean is waiting on your wrist. Complimentary delivery, five-year warranty, and a concierge that answers in minutes.</p>
+        <a class="btn btn-gold btn-lg reveal d-3" href="collection.html">
+          Shop Luxury Collection
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+  <!-- Quick view modal -->
+  <div class="modal" id="quickview" role="dialog" aria-modal="true" aria-label="Product quick view">
+    <div class="modal-panel">
+      <button class="modal-close" id="qv-close" aria-label="Close quick view" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="modal-media">
+        <img id="qv-img" alt="" hidden>
+      </div>
+      <div class="modal-body">
+        <span class="badge badge-gold" id="qv-tag" style="align-self:flex-start">Signature Piece</span>
+        <h3 id="qv-name" class="product-name" style="font-size:2rem"></h3>
+        <div class="product-meta">
+          <span class="stars-inline" id="qv-stars"></span>
+          <span id="qv-ratings"></span>
+        </div>
+        <p id="qv-desc" class="section-lead" style="font-size:0.98rem"></p>
+        <div class="qv-price" id="qv-price"></div>
+        <div class="qv-specs" id="qv-specs"></div>
+        <div class="qv-actions">
+          <button class="btn btn-gold" id="qv-buy" type="button">Buy Now</button>
+          <button class="btn btn-royal" id="qv-add" type="button">Add to Cart</button>
+          <button class="btn btn-ghost" id="qv-wish" type="button">Wishlist</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <button class="to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <script src="assets/js/partials.js"></script>
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/luxury.js"></script>
+</body>
+</html>

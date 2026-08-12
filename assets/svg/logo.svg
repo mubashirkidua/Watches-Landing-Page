@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="The Ocean Watches logo">
+  <defs>
+    <radialGradient id="ow-ocean" cx="0.38" cy="0.3" r="1.2" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#2f7bff"/>
+      <stop offset="0.45" stop-color="#1740d6"/>
+      <stop offset="1" stop-color="#04102a"/>
+    </radialGradient>
+    <linearGradient id="ow-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8a6a1f"/>
+      <stop offset="0.35" stop-color="#e8c468"/>
+      <stop offset="0.5" stop-color="#fdf0c0"/>
+      <stop offset="0.65" stop-color="#e8c468"/>
+      <stop offset="1" stop-color="#8a6a1f"/>
+    </linearGradient>
+    <linearGradient id="ow-cyan" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#38e6ff"/>
+      <stop offset="1" stop-color="#1e7bff"/>
+    </linearGradient>
+    <filter id="ow-glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/>
+      <feFlood flood-color="#38e6ff" flood-opacity="0.55" result="c"/>
+      <feComposite in="c" in2="b" operator="in"/>
+    </filter>
+  </defs>
+
+  <!-- outer glow -->
+  <circle cx="60" cy="60" r="55" fill="url(#ow-glow)"/>
+
+  <!-- bezel -->
+  <circle cx="60" cy="60" r="52" fill="url(#ow-ocean)"/>
+  <circle cx="60" cy="60" r="52" fill="none" stroke="url(#ow-gold)" stroke-width="5.5"/>
+  <circle cx="60" cy="60" r="44" fill="none" stroke="url(#ow-gold)" stroke-width="1.4" opacity="0.65"/>
+
+  <!-- minute tick marks -->
+  <g stroke="rgba(247,223,160,0.55)" stroke-width="1.6" stroke-linecap="round">
+    <line x1="60" y1="19" x2="60" y2="23"/>
+    <line x1="101" y1="60" x2="97" y2="60"/>
+    <line x1="60" y1="101" x2="60" y2="97"/>
+    <line x1="19" y1="60" x2="23" y2="60"/>
+  </g>
+
+  <!-- ocean wave -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 24 56 C 34 42 44 42 54 54 C 64 66 76 66 86 54 C 93 46 99 44 104 50"
+          stroke="url(#ow-cyan)" stroke-width="4"/>
+    <path d="M 24 68 C 36 56 48 56 58 66 C 68 76 80 76 90 66 C 96 60 102 58 108 62"
+          stroke="url(#ow-cyan)" stroke-width="3" opacity="0.55"/>
+  </g>
+
+  <!-- hour hand hint -->
+  <g transform="rotate(-35 60 60)">
+    <path d="M 57 60 L 63 60 L 61 36 L 59 36 Z" fill="#fdf0c0"/>
+  </g>
+
+  <!-- center crown jewel -->
+  <circle cx="60" cy="60" r="5.5" fill="url(#ow-gold)"/>
+  <circle cx="60" cy="60" r="2.2" fill="#fff" opacity="0.9"/>
+
+  <!-- gold cap at top -->
+  <circle cx="60" cy="7" r="3" fill="url(#ow-gold)"/>
+</svg>

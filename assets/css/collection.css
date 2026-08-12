@@ -1,0 +1,58 @@
+/* ============================================================
+   THE OCEAN WATCHES — Collection Page
+   ============================================================ */
+
+/* Perks strip */
+.perks-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin: -1.5rem auto 3.5rem;
+  position: relative;
+  z-index: 5;
+}
+.perk {
+  display: flex; align-items: center; gap: 0.9rem;
+  padding: 1.15rem 1.3rem;
+  border-radius: var(--radius-md);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  transition: transform 0.45s var(--ease-lux), border-color 0.35s, box-shadow 0.45s;
+}
+.perk:hover { transform: translateY(-5px); border-color: rgba(56,230,255,0.35); box-shadow: var(--glow-cyan); }
+.perk .ic {
+  flex-shrink: 0;
+  width: 46px; height: 46px;
+  display: grid; place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(34,67,255,0.3), rgba(56,230,255,0.08));
+  border: 1px solid var(--glass-border-strong);
+  color: var(--c-cyan);
+}
+.perk .ic svg { width: 21px; height: 21px; }
+.perk strong { display: block; font-size: 0.9rem; }
+.perk span { font-size: 0.76rem; color: var(--c-dim); }
+
+.collection-section { padding-top: 0; }
+
+/* CTA under grid */
+.collection-cta { margin-top: 4rem; }
+
+/* Empty-toast style state for filtered results */
+.no-results {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  color: var(--c-mist);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  display: none;
+}
+.no-results.show { display: block; }
+
+@media (max-width: 1024px) {
+  .perks-strip { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .perks-strip { grid-template-columns: 1fr; margin-top: -0.5rem; }
+}
