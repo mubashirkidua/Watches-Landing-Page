@@ -15,6 +15,7 @@
   const wishlist = new Set(JSON.parse(localStorage.getItem('ow_wishlist') || '[]'));
   let compare = JSON.parse(localStorage.getItem('ow_compare') || '[]');
   let products = [];
+  let authToken = localStorage.getItem('ow_token') || '';
   const fmtPrice = n => 'Rs ' + n.toLocaleString('en-US');
 
   /* ---------- Collection filter ---------- */
@@ -753,23 +754,8 @@
       }
 
       coStepShow(4);
-      setTimeout(() => {
+      const finishOrder = (order) => {
         if (!coModal.classList.contains('open')) return;
-        const order = {
-          id: 'OW-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-6),
-          date: new Date().toISOString(),
-          items: coState.items.map(it => ({ id: it.id, name: it.p.name, qty: it.qty, price: it.p.discount })),
-          totals: coTotals(coState.items),
-          customer: {
-            name: ($('#coName') || {}).value || '',
-            phone: ($('#coPhone') || {}).value || '',
-            email: ($('#coEmail') || {}).value || '',
-            address: ($('#coAddr') || {}).value || '',
-            city: ($('#coCity') || {}).value || ''
-          },
-          payment: coPayment === 'cod' ? 'cod' : 'card',
-          status: 'confirmed'
-        };
         try {
           const orders = JSON.parse(localStorage.getItem('ow_orders') || '[]');
           orders.unshift(order);
@@ -787,21 +773,61 @@
         if (oid) oid.textContent = order.id;
         const note = $('#coSuccessNote');
         if (note) {
-          const brand = coPayment === 'card' ? (cardBrand($('#coCardNum') ? $('#coCardNum').value : '') || 'card') : '';
           note.textContent = coPayment === 'cod'
-            ? 'Thank you ' + (order.customer.name.split(' ')[0] || '') + '! Keep ' + fmtRs(order.totals.total) + ' ready in cash — your Ocean is on its way to ' + (order.customer.city || 'your address') + '.'
-            : 'Payment of ' + fmtRs(order.totals.total) + ' confirmed via ' + brand + '. Your Ocean will ship within 24 hours to ' + (order.customer.city || 'your address') + '.';
+            ? 'Thank you ' + (order.customer ? order.customer.name.split(' ')[0] : '') + '! Keep ' + fmtRs(order.total) + ' ready in cash — your Ocean is on its way.'
+            : 'Order ' + order.id + ' confirmed for ' + fmtRs(order.total) + '. Complete the payment in the new tab to ship your timepiece.';
         }
         const box = $('#coSuccessBox');
         if (box) {
           box.innerHTML =
             '<div><span>Items</span><strong>' + order.items.length + ' timepiece' + (order.items.length > 1 ? 's' : '') + '</strong></div>' +
-            '<div><span>Total Paid</span><strong>' + fmtRs(order.totals.total) + '</strong></div>' +
-            '<div><span>Payment</span><strong>' + (coPayment === 'cod' ? 'Cash on Delivery' : 'Card') + '</strong></div>' +
+            '<div><span>Total Paid</span><strong>' + fmtRs(order.total) + '</strong></div>' +
+            '<div><span>Payment</span><strong>' + (coPayment === 'cod' ? 'Cash on Delivery' : 'Online') + '</strong></div>' +
             '<div><span>Delivery</span><strong class="free">Free &middot; Insured</strong></div>';
         }
         coStepShow(5);
-      }, prefersReduced ? 300 : 2200);
+      };
+      const fallbackDemo = () => {
+        const order = {
+          id: 'OW-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-6),
+          date: new Date().toISOString(),
+          items: coState.items.map(it => ({ id: it.id, name: it.p.name, qty: it.qty, price: it.p.discount })),
+          totals: coTotals(coState.items),
+          total: coTotals(coState.items).total,
+          customer: { name: ($('#coName') || {}).value || '' },
+          payment: coPayment === 'cod' ? 'cod' : 'card',
+          status: 'confirmed'
+        };
+        finishOrder(order);
+      };
+
+      const customer = {
+        name: ($('#coName') || {}).value || '',
+        phone: ($('#coPhone') || {}).value || '',
+        email: ($('#coEmail') || {}).value || '',
+        address: ($('#coAddr') || {}).value || '',
+        city: ($('#coCity') || {}).value || ''
+      };
+      const payload = {
+        items: coState.items.map(it => ({ id: it.id, qty: it.qty })),
+        customer,
+        payment_method: coPayment === 'cod' ? 'cod' : 'card'
+      };
+
+      apiFetch('/orders', { method: 'POST', body: JSON.stringify(payload) }, authToken)
+        .then(async (d) => {
+          const order = d.order;
+          order.customer = customer;
+          order.items = order.items.map(it => ({ ...it, name: it.name }));
+          if (coPayment !== 'cod' && order.payment_status === 'unpaid') {
+            try {
+              const pay = await apiFetch('/payments/checkout', { method: 'POST', body: JSON.stringify({ orderId: order.id, gateway: 'sandbox' }) });
+              if (pay.url) window.open(pay.url, '_blank');
+            } catch (err) { /* payment link still emailed */ }
+          }
+          finishOrder(order);
+        })
+        .catch(() => fallbackDemo());
     });
   }
 
@@ -1175,6 +1201,141 @@
   }
 
   renderCompare();
+
+  /* ---------- Account modal (login / register / order history) ---------- */
+  const accountModal = $('#accountModal');
+  if (accountModal) {
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+    const accForms = $('#accForms');
+    const accIn = $('#accIn');
+    const accOrdersEl = $('#accOrders');
+    authToken = authToken || localStorage.getItem('ow_token') || '';
+
+    $$('.acc-tab', accountModal).forEach(tab => tab.addEventListener('click', () => {
+      $$('.acc-tab', accountModal).forEach(t => { t.classList.toggle('active', t === tab); });
+      $('#accLogin').hidden = tab.dataset.tab !== 'login';
+      $('#accRegister').hidden = tab.dataset.tab !== 'register';
+      $('#accLoginErr').textContent = '';
+      $('#accRegErr').textContent = '';
+    }));
+
+    function renderAccOrders(orders) {
+      accOrdersEl.innerHTML = orders.length ? orders.map(o =>
+        '<div class="acc-order">' +
+          '<div class="acc-order-head"><b>' + esc(o.id) + '</b>' +
+            '<span class="pill pill-' + esc(o.status) + '">' + esc(o.status) + '</span>' +
+            '<span class="pill pill-' + esc(o.payment_status) + '">' + esc(o.payment_status) + '</span></div>' +
+          '<div class="acc-order-body">' +
+            '<div class="acc-order-items">' + o.items.map(it =>
+              '<span>' + esc(it.name) + ' × ' + it.qty + '</span>').join('') + '</div>' +
+            '<strong class="acc-order-total">' + fmtPrice(o.total) + '</strong>' +
+          '</div>' +
+          '<small class="acc-order-date">' + new Date(o.created_at).toLocaleDateString(undefined, { day: '2-digit', month: 'short', year: 'numeric' }) + '</small>' +
+        '</div>').join('') : '<p class="acc-empty">No orders yet. Your confirmed orders will appear here.</p>';
+    }
+
+    async function showAccount() {
+      accForms.hidden = false;
+      accIn.hidden = true;
+      if (authToken) {
+        try {
+          const me = await apiFetch('/auth/me', {}, authToken);
+          accForms.hidden = true;
+          accIn.hidden = false;
+          $('#accName').textContent = me.user.name;
+          $('#accEmailShow').textContent = me.user.email;
+          const hist = await apiFetch('/orders/my', {}, authToken);
+          renderAccOrders(hist.orders);
+        } catch (err) {
+          authToken = '';
+          localStorage.removeItem('ow_token');
+        }
+      }
+    }
+
+    window.owOpenAccount = function () {
+      showAccount();
+      accountModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+    const accClose = $('#accountClose');
+    if (accClose) accClose.addEventListener('click', () => {
+      accountModal.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+    accountModal.addEventListener('click', e => { if (e.target === accountModal) {
+      accountModal.classList.remove('open');
+      document.body.style.overflow = '';
+    } });
+
+    $('#accLogin').addEventListener('submit', async e => {
+      e.preventDefault();
+      const errEl = $('#accLoginErr');
+      errEl.textContent = '';
+      try {
+        const res = await apiFetch('/auth/login', { method: 'POST', body: JSON.stringify({
+          email: $('#accEmail').value.trim(), password: $('#accPass').value
+        }) }, '');
+        authToken = res.token;
+        localStorage.setItem('ow_token', res.token);
+        toast('Welcome back, ' + res.user.name.split(' ')[0], 'check');
+        showAccount();
+      } catch (err) { errEl.textContent = err.message; }
+    });
+    $('#accRegister').addEventListener('submit', async e => {
+      e.preventDefault();
+      const errEl = $('#accRegErr');
+      errEl.textContent = '';
+      try {
+        const res = await apiFetch('/auth/register', { method: 'POST', body: JSON.stringify({
+          name: $('#regName').value.trim(),
+          email: $('#regEmail').value.trim(),
+          phone: $('#regPhone').value.trim(),
+          city: $('#regCity').value.trim(),
+          password: $('#regPass').value
+        }) }, '');
+        authToken = res.token;
+        localStorage.setItem('ow_token', res.token);
+        toast('Account created — welcome to the circle', 'check');
+        showAccount();
+      } catch (err) { errEl.textContent = err.message; }
+    });
+    $('#accLogout').addEventListener('click', () => {
+      authToken = '';
+      localStorage.removeItem('ow_token');
+      toast('Signed out', 'wave');
+      showAccount();
+    });
+  }
+
+  /* ---------- API helpers + live catalogue sync ---------- */
+  async function apiFetch(path, opts = {}, token = '') {
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) headers.Authorization = 'Bearer ' + token;
+    const res = await fetch('/api' + path, { ...opts, headers });
+    let data = {};
+    try { data = await res.json(); } catch (err) { /* empty */ }
+    if (!res.ok) throw new Error(data.error || 'Request failed (' + res.status + ')');
+    return data;
+  }
+
+  (function syncCatalogue() {
+    fetch('/api/products')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (!d || !Array.isArray(d.products) || !d.products.length) return;
+        const server = new Map(d.products.map(p => [p.id, p]));
+        products = products.map(p => server.get(p.id) || p);
+        if (server.size) {
+          const merged = products.concat(d.products.filter(p => !products.some(x => x.id === p.id)));
+          products = merged;
+        }
+        renderCompare();
+        updateCounts();
+        bindProductActions();
+      })
+      .catch(() => { /* offline fallback to local catalogue */ });
+  })();
 
   /* ---------- Modal focus trap ---------- */
   function trapFocus(container) {

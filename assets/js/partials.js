@@ -23,7 +23,9 @@
     scale: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3v18M8 21h8"/><path d="M4 7h16"/><path d="m4 7-3 6.5a3.5 3.5 0 0 0 6 0L4 7zm16 0-3 6.5a3.5 3.5 0 0 0 6 0L20 7z"/></svg>',
     soundOn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12"/></svg>',
     soundOff: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 6 6M22 9l-6 6"/></svg>',
-    wave: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M2 8c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 14c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 20c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/></svg>'
+    wave: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M2 8c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 14c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 20c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/></svg>',
+    user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
+    logout: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>'
   };
 
   var isActive = function (key) { return page === key ? 'active' : ''; };
@@ -49,6 +51,7 @@
     '</button>' +
     '<button class="icon-btn" data-cart aria-label="Shopping cart" type="button">' + icons.cart + '<span class="count-pill count-cart" style="display:none">0</span></button>' +
     '<button class="icon-btn" data-wish aria-label="Wishlist" type="button">' + icons.heart + '<span class="count-pill count-wish" style="display:none">0</span></button>' +
+    '<button class="icon-btn" data-account aria-label="My account" type="button">' + icons.user + '</button>' +
     '<a class="btn btn-gold btn-sm" href="collection.html">Shop Now</a>' +
   '</div>' +
   '<button class="burger" aria-label="Open menu" aria-expanded="false" type="button"><span></span><span></span><span></span></button>' +
@@ -290,6 +293,41 @@
       '<a class="btn btn-gold" href="collection.html">Shop These Watches</a>' +
     '</div>' +
   '</div>' +
+'</div>' +
+
+'<div class="modal" id="accountModal" role="dialog" aria-modal="true" aria-label="My account">' +
+  '<div class="modal-panel account-panel">' +
+    '<button class="modal-close" id="accountClose" aria-label="Close account" type="button">' + closeIcon + '</button>' +
+    '<span class="eyebrow center">My Account</span>' +
+    '<div class="acc-forms" id="accForms">' +
+      '<div class="acc-tabs" role="tablist">' +
+        '<button class="acc-tab active" data-tab="login" type="button" role="tab">Sign In</button>' +
+        '<button class="acc-tab" data-tab="register" type="button" role="tab">Create Account</button>' +
+      '</div>' +
+      '<form class="acc-form" id="accLogin" autocomplete="off">' +
+        '<label>Email<input id="accEmail" type="email" placeholder="you@example.com" required></label>' +
+        '<label>Password<input id="accPass" type="password" placeholder="••••••••" minlength="6" required></label>' +
+        '<p class="acc-err" id="accLoginErr"></p>' +
+        '<button class="btn btn-gold btn-lg" type="submit">Sign In</button>' +
+      '</form>' +
+      '<form class="acc-form" id="accRegister" autocomplete="off" hidden>' +
+        '<label>Full Name<input id="regName" type="text" placeholder="Ahmed Khan" required></label>' +
+        '<label>Email<input id="regEmail" type="email" placeholder="you@example.com" required></label>' +
+        '<label>Phone<input id="regPhone" type="tel" placeholder="03XX-XXXXXXX"></label>' +
+        '<label>City<input id="regCity" type="text" placeholder="Karachi"></label>' +
+        '<label>Password<input id="regPass" type="password" placeholder="At least 6 characters" minlength="6" required></label>' +
+        '<p class="acc-err" id="accRegErr"></p>' +
+        '<button class="btn btn-gold btn-lg" type="submit">Create Account</button>' +
+      '</form>' +
+    '</div>' +
+    '<div class="acc-in" id="accIn" hidden>' +
+      '<div class="acc-hello"><h3 id="accName"></h3><p id="accEmailShow"></p>' +
+        '<button class="btn btn-ghost btn-sm" id="accLogout" type="button">' + icons.logout + ' Sign out</button>' +
+      '</div>' +
+      '<h4 class="acc-orders-h">Your Orders</h4>' +
+      '<div class="acc-orders" id="accOrders"></div>' +
+    '</div>' +
+  '</div>' +
 '</div>';
 
   document.body.insertAdjacentHTML('beforeend', sharedHTML);
@@ -306,6 +344,10 @@
   var soundBtn = document.querySelector('[data-sound]');
   if (soundBtn) soundBtn.addEventListener('click', function () {
     if (window.owToggleSound) window.owToggleSound();
+  });
+  var accountBtn = document.querySelector('[data-account]');
+  if (accountBtn) accountBtn.addEventListener('click', function () {
+    if (window.owOpenAccount) window.owOpenAccount();
   });
 
   /* cart / wishlist pill behaviour */

@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ocean Watches — Admin</title>
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+<!-- Login -->
+<div id="loginView">
+  <div class="login-card">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"/><path d="M12 7V3M12 21v-4M7 12H3M21 12h-4" stroke-linecap="round"/></svg>
+      <h1>The Ocean Watches</h1>
+      <p>Admin Console</p>
+    </div>
+    <form id="loginForm" autocomplete="off">
+      <label>Email
+        <input id="loginEmail" type="email" placeholder="admin@oceanwatches.com" required>
+      </label>
+      <label>Password
+        <input id="loginPass" type="password" placeholder="••••••••" required>
+      </label>
+      <p class="login-err" id="loginErr"></p>
+      <button class="btn-gold" type="submit" id="loginBtn">Sign in</button>
+    </form>
+    <p class="login-hint">Default: admin@oceanwatches.com / admin123<br>Change via <code>ADMIN_EMAIL</code> / <code>ADMIN_PASSWORD</code> in <code>server/.env</code></p>
+  </div>
+</div>
+
+<!-- App -->
+<div id="appView" hidden>
+  <aside id="sidebar">
+    <div class="side-brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"/><path d="M12 7V3M12 21v-4M7 12H3M21 12h-4" stroke-linecap="round"/></svg>
+      <div><strong>Ocean</strong><span>Admin</span></div>
+    </div>
+    <nav id="nav">
+      <button class="nav-item active" data-view="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</button>
+      <button class="nav-item" data-view="products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>Products</button>
+      <button class="nav-item" data-view="orders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2V2z"/></svg>Orders</button>
+      <button class="nav-item" data-view="customers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.5-5 6.5-5s5.7 1.5 6.5 5"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 15.5c2.6.2 4.3 1.7 5 4.5"/></svg>Customers</button>
+      <button class="nav-item" data-view="coupons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/><path d="M14 8v8"/></svg>Coupons</button>
+    </nav>
+    <div class="side-foot">
+      <span class="mail-dot" id="mailDot" title=""></span>
+      <button class="nav-item" id="logoutBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>Log out</button>
+    </div>
+  </aside>
+
+  <main id="main">
+    <header id="topbar"><h2 id="viewTitle">Dashboard</h2><span id="adminEmail"></span></header>
+
+    <!-- Dashboard -->
+    <section id="view-dashboard" class="view">
+      <div class="stat-grid">
+        <div class="stat"><span>Revenue</span><strong id="stRevenue">—</strong><small>paid + COD</small></div>
+        <div class="stat"><span>Unpaid</span><strong id="stUnpaid">—</strong><small>awaiting payment</small></div>
+        <div class="stat"><span>Orders</span><strong id="stOrders">—</strong><small>all time</small></div>
+        <div class="stat"><span>Customers</span><strong id="stCustomers">—</strong><small>registered</small></div>
+        <div class="stat"><span>Pending</span><strong id="stPending">—</strong><small>to fulfil</small></div>
+      </div>
+      <div class="dash-grid">
+        <div class="panel">
+          <h3>Low stock</h3>
+          <div id="lowStock"></div>
+        </div>
+        <div class="panel">
+          <h3>Recent orders</h3>
+          <div id="recentOrders"></div>
+        </div>
+        <div class="panel">
+          <h3>Orders by status</h3>
+          <div id="byStatus"></div>
+        </div>
+        <div class="panel">
+          <h3>Units sold by category</h3>
+          <div id="byCategory"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section id="view-products" class="view" hidden>
+      <div class="toolbar">
+        <input id="prodSearch" type="search" placeholder="Search products…">
+        <button class="btn-gold" id="addProductBtn">+ New product</button>
+      </div>
+      <div class="table-wrap"><table id="prodTable">
+        <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Off</th><th>Stock</th><th>Featured</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </section>
+
+    <!-- Orders -->
+    <section id="view-orders" class="view" hidden>
+      <div class="toolbar">
+        <select id="orderStatus">
+          <option value="all">All statuses</option>
+          <option value="pending">Pending</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+        <input id="orderSearch" type="search" placeholder="Search id / name / email…">
+      </div>
+      <div class="table-wrap"><table id="orderTable">
+        <thead><tr><th>Order</th><th>Customer</th><th>Total</th><th>Payment</th><th>Date</th><th>Status</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </section>
+
+    <!-- Customers -->
+    <section id="view-customers" class="view" hidden>
+      <div class="table-wrap"><table id="custTable">
+        <thead><tr><th>Customer</th><th>Email</th><th>Phone</th><th>City</th><th>Orders</th><th>Spend</th><th>Joined</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </section>
+
+    <!-- Coupons -->
+    <section id="view-coupons" class="view" hidden>
+      <div class="toolbar"><span class="spacer"></span><button class="btn-gold" id="addCouponBtn">+ New coupon</button></div>
+      <div class="table-wrap"><table id="couponTable">
+        <thead><tr><th>Code</th><th>Name</th><th>Type</th><th>Value</th><th>Min order</th><th>Used / Max</th><th>Active</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </section>
+  </main>
+</div>
+
+<!-- Product modal -->
+<div id="productModal" class="modal" hidden>
+  <div class="modal-box">
+    <header><h3 id="prodModalTitle">New product</h3><button class="x" data-close>&times;</button></header>
+    <form id="prodForm">
+      <div class="cols">
+        <label>ID (slug)<input name="id" placeholder="e.g. ocean-nova" required></label>
+        <label>Category<input name="category" placeholder="e.g. Nova" required></label>
+        <label>Name<input name="name" placeholder="Ocean Nova" required></label>
+        <label>Badge label<input name="badgeLabel" placeholder="Best Seller"></label>
+      </div>
+      <label>Description<input name="desc" placeholder="Short description" required></label>
+      <div class="cols">
+        <label>Original price (Rs)<input name="original" type="number" min="1" required></label>
+        <label>Sale price (Rs)<input name="discount" type="number" min="1" required></label>
+        <label>Stock<input name="stock" type="number" min="0" value="10" required></label>
+        <label>Rating<input name="rating" type="number" step="0.1" min="0" max="5" value="4.5"></label>
+      </div>
+      <div class="cols">
+        <label>Image path<input name="img" placeholder="assets/svg/watches/…"></label>
+        <label>Badge type<select name="badgeType"><option value="gold">Gold</option><option value="cyan">Cyan</option></select></label>
+        <label class="check"><input name="featured" type="checkbox"> Featured</label>
+      </div>
+      <p class="form-err" id="prodErr"></p>
+      <footer><button type="button" class="ghost" data-close>Cancel</button><button type="submit" class="btn-gold" id="prodSaveBtn">Save product</button></footer>
+    </form>
+  </div>
+</div>
+
+<!-- Coupon modal -->
+<div id="couponModal" class="modal" hidden>
+  <div class="modal-box">
+    <header><h3 id="couponModalTitle">New coupon</h3><button class="x" data-close>&times;</button></header>
+    <form id="couponForm">
+      <div class="cols">
+        <label>Code<input name="id" placeholder="SUMMER20" required></label>
+        <label>Name<input name="name" placeholder="20% off summer"></label>
+      </div>
+      <div class="cols">
+        <label>Type<select name="type"><option value="percent">Percent</option><option value="flat">Flat (Rs)</option></select></label>
+        <label>Value<input name="value" type="number" min="1" required></label>
+        <label>Min order (Rs)<input name="min_order" type="number" min="0" value="0"></label>
+        <label>Max uses (0 = unlimited)<input name="max_uses" type="number" min="0" value="0"></label>
+      </div>
+      <label class="check"><input name="active" type="checkbox" checked> Active</label>
+      <p class="form-err" id="couponErr"></p>
+      <footer><button type="button" class="ghost" data-close>Cancel</button><button type="submit" class="btn-gold">Save coupon</button></footer>
+    </form>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="/admin/admin.js"></script>
+</body>
+</html>

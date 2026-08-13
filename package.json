@@ -1,0 +1,21 @@
+{
+  "name": "ocean-watches",
+  "version": "1.0.0",
+  "description": "The Ocean Watches - luxury watch store (frontend + API + admin)",
+  "type": "module",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "nodemailer": "^9.0.5"
+  }
+}

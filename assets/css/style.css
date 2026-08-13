@@ -1419,6 +1419,40 @@ h1, h2, h3, h4 {
 .compare-table .badge { display: inline-block; margin: 0; }
 .compare-modal-actions { display: flex; justify-content: center; margin-top: 1.6rem; }
 
+/* ---------- Account modal ---------- */
+.account-panel { display: grid; grid-template-columns: 1fr; width: min(440px, 100%); max-width: 440px; align-content: start; max-height: 88vh; overflow: auto; }
+.acc-tabs { display: flex; gap: 0.5rem; margin: 1rem 0 1.4rem; background: rgba(255, 255, 255, 0.04); padding: 0.35rem 2.6rem 0.35rem 0.35rem; border-radius: 12px; }
+.acc-tab { flex: 1; padding: 0.6rem; border: 0; border-radius: 9px; background: transparent; color: var(--c-dim); font-weight: 600; font-size: 0.9rem; cursor: pointer; font-family: var(--font-body); }
+.acc-tab.active { background: var(--c-gold); color: #12100a; }
+.acc-form { display: grid; gap: 0.9rem; }
+.acc-form[hidden] { display: none; }
+.acc-form label { display: grid; gap: 0.4rem; font-size: 0.8rem; color: var(--c-dim); letter-spacing: 0.03em; }
+.acc-form input {
+  width: 100%; padding: 0.75rem 0.9rem; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05); color: var(--c-text); font-size: 0.95rem; font-family: var(--font-body);
+}
+.acc-form input:focus { outline: none; border-color: var(--c-gold); }
+.acc-err { color: #ff7a7a; font-size: 0.82rem; min-height: 1.1rem; margin: 0; }
+.acc-hello { display: flex; flex-direction: column; gap: 0.3rem; align-items: center; text-align: center; margin-bottom: 1.2rem; }
+.acc-hello h3 { margin: 0; color: var(--c-gold); }
+.acc-hello p { margin: 0; color: var(--c-dim); font-size: 0.85rem; }
+.acc-orders-h { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--c-dim); margin: 1rem 0 0.8rem; }
+.acc-orders { display: grid; gap: 0.7rem; max-height: 46vh; overflow: auto; }
+.acc-order { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 0.9rem 1rem; }
+.acc-order-head { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.acc-order-head b { font-size: 0.85rem; letter-spacing: 0.03em; }
+.pill { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.2rem 0.55rem; border-radius: 99px; font-weight: 700; }
+.pill-pending, .pill-unpaid { background: rgba(251, 191, 36, 0.16); color: #fbbf24; }
+.pill-confirmed, .pill-paid, .pill-cod { background: rgba(52, 211, 153, 0.16); color: #34d399; }
+.pill-shipped { background: rgba(108, 168, 255, 0.16); color: #6ca8ff; }
+.pill-delivered { background: rgba(52, 211, 153, 0.16); color: #34d399; }
+.pill-cancelled { background: rgba(255, 107, 107, 0.16); color: #ff6b6b; }
+.acc-order-body { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 0.5rem; }
+.acc-order-items { display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.82rem; color: var(--c-text); }
+.acc-order-total { color: var(--c-gold); font-size: 0.95rem; white-space: nowrap; }
+.acc-order-date { color: var(--c-dim); font-size: 0.72rem; }
+.acc-empty { color: var(--c-dim); font-size: 0.85rem; text-align: center; padding: 1rem; }
+
 /* ---------- Mobile tweaks ---------- */
 @media (max-width: 640px) {
   .icon-sound { display: none; }
