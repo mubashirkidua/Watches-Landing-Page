@@ -52,6 +52,19 @@
     });
     ring.appendChild(frag);
 
+    /* Each orbiting watch also spins slowly on its own axis (JS-driven, reliable everywhere) */
+    ring.querySelectorAll('.orbit-spin').forEach((spinner, idx) => {
+      let spinAngle = 0;
+      let spinLast = performance.now();
+      const spinPeriod = 20 + (idx % 4) * 4; // 20–32 s per revolution, varied
+      (function spinLoop(now) {
+        spinAngle = (spinAngle + (now - spinLast) * (360 / spinPeriod) / 1000) % 360;
+        spinLast = now;
+        spinner.style.transform = 'rotate(' + spinAngle.toFixed(2) + 'deg)';
+        requestAnimationFrame(spinLoop);
+      })(performance.now());
+    });
+
     ring.addEventListener('keydown', e => {
       if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('orbit-item')) {
         e.preventDefault();

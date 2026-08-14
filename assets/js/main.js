@@ -92,6 +92,19 @@
     }, 3200);
   }
 
+  /* ---------- Watch slow spin (JS-driven, reliable in every browser) ---------- */
+  $$('.spin-wrap').forEach((wrap) => {
+    let spinAngle = 0;
+    let spinLast = performance.now();
+    const spinRate = parseFloat(wrap.dataset.spin || '15'); // deg per second → 360° in 24s
+    (function spinLoop(now) {
+      spinAngle = (spinAngle + (now - spinLast) * spinRate / 1000) % 360;
+      spinLast = now;
+      wrap.style.transform = 'rotate(' + spinAngle.toFixed(2) + 'deg)';
+      requestAnimationFrame(spinLoop);
+    })(performance.now());
+  });
+
   /* ---------- Sticky nav + back-to-top ---------- */
   const nav = $('.nav');
   const toTop = $('.to-top');
