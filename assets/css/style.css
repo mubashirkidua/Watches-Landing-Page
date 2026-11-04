@@ -1461,3 +1461,56 @@ h1, h2, h3, h4 {
   .sr-actions { width: 100%; justify-content: flex-end; }
   .compare-slots { grid-template-columns: 1fr; }
 }
+/* ============================================================
+   CHECKOUT MODAL — FULL PAGE & RESPONSIVE SCROLL FIX
+   ============================================================ */
+.modal {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  padding: 1rem !important;
+}
+
+.modal-panel.checkout-panel,
+.checkout-panel {
+  width: min(720px, 95vw) !important;
+  max-height: calc(100vh - 2rem) !important;
+  overflow-y: auto !important;
+  margin: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.co-head {
+  padding: 1.1rem 1.6rem 0.8rem !important;
+  flex-shrink: 0;
+}
+
+.co-body {
+  padding: 1.1rem 1.6rem 1.4rem !important;
+  overflow-y: auto !important;
+  flex: 1;
+}
+
+.co-title {
+  font-size: 1.35rem !important;
+  margin-bottom: 0.85rem !important;
+}
+
+.co-form {
+  gap: 0.75rem !important;
+}
+
+.co-form label {
+  gap: 0.35rem !important;
+  font-size: 0.75rem !important;
+}
+
+.co-form input {
+  padding: 0.7rem 0.95rem !important;
+  font-size: 0.88rem !important;
+}
+
+.co-nav {
+  margin-top: 1.1rem !important;
+  padding-bottom: 0.4rem;
+}
